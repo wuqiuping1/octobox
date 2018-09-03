@@ -94,6 +94,31 @@ class NotificationsController < ApplicationController
     @cur_selected = [per_page, @total].min
   end
 
+  def three
+    scope = notifications_for_presentation
+    @types                 = scope.reorder(nil).distinct.group(:subject_type).count
+    @unread_notifications  = scope.reorder(nil).distinct.group(:unread).count
+    @reasons               = scope.reorder(nil).distinct.group(:reason).count
+    @unread_repositories   = scope.reorder(nil).distinct.group(:repository_full_name).count
+
+    if display_subject?
+      @states                = scope.reorder(nil).distinct.joins(:subject).group('subjects.state').count
+      @unlabelled            = scope.reorder(nil).unlabelled.count
+      @bot_notifications     = scope.reorder(nil).bot_author.count
+      @assigned              = scope.reorder(nil).assigned(current_user.github_login).count
+      @visiblity             = scope.reorder(nil).distinct.joins(:repository).group('repositories.private').count
+      @repositories          = scope.map(&:repository).compact
+    end
+
+    scope = current_notifications(scope)
+    check_out_of_bounds(scope)
+
+    @total = scope.count
+
+    @notifications = scope.newest.page(page).per(per_page)
+    @cur_selected = [per_page, @total].min
+  end
+
   # Return a count for the number of unread notifications
   #
   # :category: Notifications CRUD
