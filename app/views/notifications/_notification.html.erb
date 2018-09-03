@@ -1,5 +1,5 @@
-<div id='row notification-<%= notification.id %>' class='row notification <%= notification.unread ? 'active' : '' %>'>
-  <div class='col-auto'>
+<div id='row d-flex notification-<%= notification.id %>' class='row notification <%= notification.unread ? 'active' : '' %>'>
+  <div class='col-auto d-flex flex-column flex-md-row'>
     <div class='notification-checkbox'>
       <%= check_box_tag(
           '',
@@ -21,11 +21,11 @@
       </div>
     <% end %>
   </div>
-  <div class='col'>
-    <div class='notification-icon <%= notification_icon_color(notification.state) if notification.display_subject? %>'>
-      <%= octicon notification_icon(notification.subject_type, notification.state), :height => 16, title: notification_icon_title(notification.subject_type, notification.state), data: {toggle: 'tooltip'} %>
-    </div>
+  <div class='col d-flex flex-column flex-md-row'>
     <div class='notification-subject'>
+      <span class='notification-icon <%= notification_icon_color(notification.state) if notification.display_subject? %>'>
+        <%= octicon notification_icon(notification.subject_type, notification.state), :height => 16, title: notification_icon_title(notification.subject_type, notification.state), data: {toggle: 'tooltip'} %>
+      </span>
       <%= link_to notification.subject_title, notification.web_url, target: '_blank', rel: "noopener", class: 'link', onclick: "markRead(#{notification.id})" %>
 
       <% if notification.display_subject? %>
@@ -53,7 +53,7 @@
       <% end %>
     </div>
   </div>
-  <div class='col-1'>
+  <div class='col-auto d-flex flex-column flex-md-row'>
     <div class='notification-reason'>
       <%= link_to notification.reason.humanize, root_path(filtered_params(reason: notification.reason)), class: "badge badge-#{reason_label(notification.reason)}" %>
     </div>
