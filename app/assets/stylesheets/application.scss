@@ -1,3 +1,5 @@
+$sidebar-width: 250px;
+
 $table-bg-active: #fafafa;
 $font-family-sans-serif: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 $jumbotron-bg: #fff;
@@ -23,14 +25,16 @@ body {
 
 .three {
 
-  .col{
+  .container{
     overflow-y: scroll;
+    padding-top: 1em;
+    padding-bottom: 2em;
   }
 
   .sidebar{
-    min-width: 250px;
+    max-width: $sidebar-width;
     color: red;
-    padding: 1em 1em 2em
+
   }
 
   .main{
@@ -39,7 +43,7 @@ body {
   }
 
   .thread{
-    min-width: 50em;
+    max-width: 50em;
     color: green;
   }
 
@@ -413,15 +417,15 @@ td.keys {
   .notification-star,
   .notification-icon,
   .notification-checkbox {
-    width: 1%;
-    text-align: center;
+    // width: 1%;
+    // text-align: center;
   }
   .notification-checkbox {
     input {
-      margin-left: 6px;
-      margin-right: 0;
-      position: relative;
-      top: -1px;
+      // margin-left: 6px;
+      // margin-right: 0;
+      // position: relative;
+      // top: -1px;
     }
   }
 }
@@ -459,27 +463,27 @@ td.keys {
     .notification-checkbox,
     .notification-star,
     .notification-date {
-      position: absolute;
+      // position: absolute;
     }
     .notification-checkbox {
-      top: 8px;
-      left: 10px;
+      // top: 8px;
+      // left: 10px;
     }
     .notification-star {
-      top: 38px;
-      left: 10px;
+      // top: 38px;
+      // left: 10px;
     }
     .notification-icon,
     .notification-subject {
-      display: inline-block;
+      // display: inline-block;
     }
     .notification-subject {
       .link {
-        display: inline-block;
-        overflow: hidden;
-        width: calc(100vw - 200px);
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        // display: inline-block;
+        // overflow: hidden;
+        // width: calc(100vw - 200px);
+        // white-space: nowrap;
+        // text-overflow: ellipsis;
       }
     }
     .notification-subject-author:before {
@@ -487,15 +491,10 @@ td.keys {
       color: $text-muted;
       font-size: 10px;
     }
-    route {
-      top: 10px;
-      right: 10px;
-    }
   }
 }
 
 @include media-breakpoint-down(md) {
-  $sidebar-width: 250px;
 
   .flex-content {
     position: relative;

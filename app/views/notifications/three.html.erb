@@ -1,57 +1,16 @@
 <div class="three d-flex">
-    <div class='sidebar col d-none d-md-block'>
+    <div class='container d-none d-md-block sidebar'>
       <%= render "sidebar" %>
     </div>
-    <div class="main flex-fill">
-      <table class='table table-hover table-notifications js-table-notifications mb-0 <%= 'filtered' if any_active_filters? %>' data-refresh-interval=<%= current_user.effective_refresh_interval %>>
+    <div class="container flex-fill main">
+        <div class='d-flex flex-column notifications'>
           <% if @notifications.to_a.any? %>
             <%= render partial: 'notification', collection: @notifications %>
-          <% elsif initial_sync? %>
-            <div class="blankslate blankslate-spacious blankslate-clean-background js-initial_sync">
-              <%= octicon 'cloud-download', height: 32, class: 'blankslate-icon' %>
-              <h3>Syncing your notifications for the first time...</h3>
-              <p>This might take a minute or two</p>
-            </div>
-          <% elsif no_url_filter_parameters_present %>
-            <div class="blankslate blankslate-spacious blankslate-clean-background">
-              <%= octicon 'mail-read', height: 32, class: 'blankslate-icon' %>
-              <%= octicon 'thumbsup', height: 32, class: 'blankslate-icon' %>
-              <h3>You're in the clear!</h3>
-              <p>There are no notifications that need your attention.</p>
-              <p>
-                <%= link_to sync_notifications_path(filters), method: :post, class: 'btn btn-outline-secondary sync' do %>
-                  <%= octicon 'sync', height: 18 %>
-                  <span class='ml-1'>Refresh</span>
-                <% end %>
-              </p>
-              <% unless current_user.notifications.any? %>
-                <p><i>Expecting notifications? Make sure <a href="<%= Octobox.config.github_domain %>/settings/notifications">Web Notifications</a> are enabled on your GitHub account.</i></p>
-              <% end %>
-              <% if current_user.last_synced_at %>
-                <p class='text-muted'>
-                  <small>Last sync: <%= time_ago_in_words current_user.last_synced_at %> ago</small>
-                </p>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="blankslate blankslate-spacious blankslate-clean-background">
-              <%= octicon 'search', height: 32, class: 'blankslate-icon' %>
-              <%= octicon 'gist-secret', height: 32, class: 'blankslate-icon' %>
-              <h3>Nothing to see here.</h3>
-              <p>You can always try <%= link_to 'refreshing', sync_notifications_path(filters), method: :post %> or <%= link_to 'removing filters', root_path %>.</p>
-              <% unless current_user.notifications.any? %>
-                <p><i>Expecting notifications? Make sure <a href="<%= Octobox.config.github_domain %>/settings/notifications">Web Notifications</a> are enabled on your GitHub account.</i></p>
-              <% end %>
-              <% if current_user.last_synced_at %>
-                <p class='text-muted'>
-                  <small>Last sync: <%= time_ago_in_words current_user.last_synced_at %> ago</small>
-                </p>
-              <% end %>
-            </div>
           <% end %>
-        </table>
+        </div>
+      </table>
     </div>
-    <div class="col thread d-none d-xl-block">
+    <div class="container d-none thread">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         notifications Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.

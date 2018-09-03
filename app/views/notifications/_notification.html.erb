@@ -1,5 +1,5 @@
-<tr id='notification-<%= notification.id %>' class='notification <%= notification.unread ? 'active' : '' %>'>
-  <td class='notification-checkbox'>
+<div id='notification-<%= notification.id %>' class='row notification <%= notification.unread ? 'active' : '' %>'>
+  <div class='notification-checkbox'>
     <%= check_box_tag(
         '',
         notification.id,
@@ -8,23 +8,22 @@
         class: (notification.archived ? 'unarchive' : 'archive')
       )
     %>
-  </td>
-  <td class='notification-star'>
+  </div>
+  <div class='notification-star'>
     <%= octicon 'star', height: 18, class: "toggle-star #{notification.starred ? 'star-active' : 'star-inactive'}", data: { id: notification.id, toggle: 'tooltip' }, title: notification.starred ? 'Remove star' : 'Star' %>
-  </td>
-
+  </div>
   <% if show_archive_icon? %>
-    <td class='notification-archived'>
+    <div class='notification-archived'>
       <% if notification.archived? %>
         <%= octicon 'archive', height: 16, data: { toggle: 'tooltip' }, title: 'Archived' %>
       <% end %>
-    </td>
+    </div>
   <% end %>
 
-  <td class='notification-icon <%= notification_icon_color(notification.state) if notification.display_subject? %>'>
+  <div class='notification-icon <%= notification_icon_color(notification.state) if notification.display_subject? %>'>
     <%= octicon notification_icon(notification.subject_type, notification.state), :height => 16, title: notification_icon_title(notification.subject_type, notification.state), data: {toggle: 'tooltip'} %>
-  </td>
-  <td class='notification-subject'>
+  </div>
+  <div class='notification-subject'>
     <%= link_to notification.subject_title, notification.web_url, target: '_blank', rel: "noopener", class: 'link', onclick: "markRead(#{notification.id})" %>
 
     <% if notification.display_subject? %>
@@ -34,15 +33,15 @@
         <% end %>
       <% end %>
     <% end %>
-  </td>
+  </div>
   <% unless params[:repo].present? %>
-    <td class='notification-repo'>
+    <div class='notification-repo'>
       <small>
         <%= link_to notification.repository_full_name, root_path(filtered_params(repo: notification.repository_full_name)), class: 'text-muted' %>
       </small>
-    </td>
+    </div>
   <% end %>
-  <td class='notification-subject-author'>
+  <div class='notification-subject-author'>
     <% if notification.display_subject? %>
       <% if notification.subject %>
         <small>
@@ -50,13 +49,13 @@
         </small>
       <% end %>
     <% end %>
-  </td>
-  <td class='notification-reason'>
+  </div>
+  <div class='notification-reason'>
     <%= link_to notification.reason.humanize, root_path(filtered_params(reason: notification.reason)), class: "badge badge-#{reason_label(notification.reason)}" %>
-  </td>
-  <td class='notification-date'>
+  </div>
+  <div class='notification-date'>
     <small class='text-muted'>
       <%= local_relative_time(notification.updated_at, type: 'time-or-date') %>
     </small>
-  </td>
-</tr>
+  </div>
+</div>
