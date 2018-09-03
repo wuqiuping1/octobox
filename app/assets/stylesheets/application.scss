@@ -20,9 +20,28 @@ html, body {
 body {
   font-size: 14px;
 }
-html {
-  position: relative;
-  min-height: 100%;
+
+.three {
+
+  .col{
+    overflow-y: scroll;
+  }
+
+  .sidebar{
+    min-width: 250px;
+    color: red;
+  }
+
+  .main{
+    overflow-y: scroll;
+    color: blue;
+  }
+
+  .thread{
+    min-width: 50em;
+    color: green;
+  }
+
 }
 
 .flex-body {
@@ -30,13 +49,16 @@ html {
   height: 100vh;
   flex-direction: column;
 }
+
 .flex-header {
   flex: 0 0 auto;
 }
+
 .flex-content {
   display: flex;
   min-height:0;
 }
+
 .flex-sidebar {
   flex: 0 0 250px;
   overflow: auto;
@@ -464,7 +486,7 @@ td.keys {
       color: $text-muted;
       font-size: 10px;
     }
-    .notification-date {
+    route {
       top: 10px;
       right: 10px;
     }

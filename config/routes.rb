@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   end
 
   get '/documentation', to: 'pages#documentation'
+  get '/three', to: 'pages#three'
   get '/support', to: redirect('/documentation#support')
 
   post '/hooks/github', to: 'hooks#create'
