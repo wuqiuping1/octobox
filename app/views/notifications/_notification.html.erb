@@ -1,6 +1,7 @@
-<div id='row d-flex notification-<%= notification.id %>' class='row notification <%= notification.unread ? 'active' : '' %>'>
-  <div class='col-auto d-flex flex-column flex-md-row'>
-    <div class='notification-checkbox'>
+<div id='notification-<%= notification.id %>' class='d-flex d-md-table-row notification <%= notification.unread ? 'active' : '' %>'>
+  <!-- col one flex -->
+  <div class='d-flex flex-column d-md-none'>
+    <div class='notification-checkbox '>
       <%= check_box_tag(
           '',
           notification.id,
@@ -10,24 +11,48 @@
         )
       %>
     </div>
-    <div class='notification-star'>
+    <div class='notification-star '>
       <%= octicon 'star', height: 18, class: "toggle-star #{notification.starred ? 'star-active' : 'star-inactive'}", data: { id: notification.id, toggle: 'tooltip' }, title: notification.starred ? 'Remove star' : 'Star' %>
     </div>
     <% if show_archive_icon? %>
-      <div class='notification-archived'>
+      <div class='notification-archived '>
         <% if notification.archived? %>
           <%= octicon 'archive', height: 16, data: { toggle: 'tooltip' }, title: 'Archived' %>
         <% end %>
       </div>
-    <% end %>
+    <% end %>  
   </div>
-  <div class='col d-flex flex-column flex-md-row'>
-    <div class='notification-subject'>
+
+  <!-- col one table -->
+  <div class='d-none d-md-table-cell notification-checkbox'>
+    <%= check_box_tag(
+        '',
+        notification.id,
+        false,
+        title: (notification.archived ? 'Unarchive' : 'Archive'),
+        class: (notification.archived ? 'unarchive' : 'archive')
+      )
+    %>
+  </div>
+  <div class='d-none d-md-table-cell notification-star '>
+    <%= octicon 'star', height: 18, class: "toggle-star #{notification.starred ? 'star-active' : 'star-inactive'}", data: { id: notification.id, toggle: 'tooltip' }, title: notification.starred ? 'Remove star' : 'Star' %>
+  </div>
+  <% if show_archive_icon? %>
+    <div class='d-none d-md-table-cell notification-archived '>
+      <% if notification.archived? %>
+        <%= octicon 'archive', height: 16, data: { toggle: 'tooltip' }, title: 'Archived' %>
+      <% end %>
+    </div>
+  <% end %>  
+
+  
+  <!-- col two flex-->
+  <div class='d-flex flex-column flex-fill d-md-none'>
+    <div class='notification-subject '>
       <span class='notification-icon <%= notification_icon_color(notification.state) if notification.display_subject? %>'>
         <%= octicon notification_icon(notification.subject_type, notification.state), :height => 16, title: notification_icon_title(notification.subject_type, notification.state), data: {toggle: 'tooltip'} %>
       </span>
       <%= link_to notification.subject_title, notification.web_url, target: '_blank', rel: "noopener", class: 'link', onclick: "markRead(#{notification.id})" %>
-
       <% if notification.display_subject? %>
         <% if notification.subject %>
           <% notification.subject.labels.each do |label| %>
@@ -36,14 +61,15 @@
         <% end %>
       <% end %>
     </div>
+
     <% unless params[:repo].present? %>
-      <div class='notification-repo'>
+      <div class='notification-repo '>
         <small>
           <%= link_to notification.repository_full_name, root_path(filtered_params(repo: notification.repository_full_name)), class: 'text-muted' %>
         </small>
       </div>
     <% end %>
-    <div class='notification-subject-author'>
+    <div class='notification-subject-author '>
       <% if notification.display_subject? %>
         <% if notification.subject %>
           <small>
@@ -53,14 +79,58 @@
       <% end %>
     </div>
   </div>
-  <div class='col-auto d-flex flex-column flex-md-row'>
-    <div class='notification-reason'>
+  <!-- col two table-->
+  <div class='notification-subject d-none d-md-table-cell'>
+      <span class='notification-icon <%= notification_icon_color(notification.state) if notification.display_subject? %>'>
+        <%= octicon notification_icon(notification.subject_type, notification.state), :height => 16, title: notification_icon_title(notification.subject_type, notification.state), data: {toggle: 'tooltip'} %>
+      </span>
+      <%= link_to notification.subject_title, notification.web_url, target: '_blank', rel: "noopener", class: 'link', onclick: "markRead(#{notification.id})" %>
+      <% if notification.display_subject? %>
+        <% if notification.subject %>
+          <% notification.subject.labels.each do |label| %>
+            <%= link_to emojify(label.name), root_path(filtered_params(label: label.name)), class: "badge d-sm", style: "background-color: ##{label.color}; color: #{label.text_color}" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% unless params[:repo].present? %>
+      <div class='notification-repo d-none d-md-table-cell'>
+        <small>
+          <%= link_to notification.repository_full_name, root_path(filtered_params(repo: notification.repository_full_name)), class: 'text-muted' %>
+        </small>
+      </div>
+    <% end %>
+    <div class='notification-subject-author d-none d-md-table-cell'>
+      <% if notification.display_subject? %>
+        <% if notification.subject %>
+          <small>
+            <%= link_to notification.subject.author, root_path(filtered_params(author: notification.subject.author)), class: 'text-muted', title: 'Author', data: {toggle: 'tooltip'} %>
+          </small>
+        <% end %>
+      <% end %>
+    </div>
+  
+
+  <!-- col three flex -->
+  <div class='d-flex flex-column d-md-none'>
+    <div class='notification-reason '>
       <%= link_to notification.reason.humanize, root_path(filtered_params(reason: notification.reason)), class: "badge badge-#{reason_label(notification.reason)}" %>
     </div>
-    <div class='notification-date'>
+    <div class='notification-date '>
       <small class='text-muted'>
         <%= local_relative_time(notification.updated_at, type: 'time-or-date') %>
       </small>
     </div>
   </div>
+  <!-- col three table -->
+  <div class='notification-reason d-none d-md-table-cell'>
+      <%= link_to notification.reason.humanize, root_path(filtered_params(reason: notification.reason)), class: "badge badge-#{reason_label(notification.reason)}" %>
+    </div>
+    <div class='notification-date d-none d-md-table-cell'>
+      <small class='text-muted'>
+        <%= local_relative_time(notification.updated_at, type: 'time-or-date') %>
+      </small>
+    </div>
+
 </div>

@@ -42,6 +42,18 @@ body {
     color: blue;
   }
 
+  .notification{
+    div{
+      padding:0.6rem;
+    }
+    .d-flex{
+      padding:0.6rem;
+      div{
+        padding: 0;
+      }
+    }  
+  }
+
   .thread{
     max-width: 50em;
     color: green;

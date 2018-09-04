@@ -1,16 +1,15 @@
 <div class="three d-flex">
-    <div class='container d-none d-md-block sidebar'>
+    <div class='container d-none sidebar'>
       <%= render "sidebar" %>
     </div>
     <div class="flex-fill main">
-        <div class='container flex-column notifications'>
-          <% if @notifications.to_a.any? %>
-            <%= render partial: 'notification', collection: @notifications %>
-          <% end %>
-        </div>
-      </table>
+      <div class='container d-flex flex-column d-md-table'>
+        <% if @notifications.to_a.any? %>
+          <%= render partial: 'notification', collection: @notifications %>
+        <% end %>
+      </div>
     </div>
-    <div class="container d-none d-xl-block thread">
+    <div class="container d-none thread">
       <p>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         notifications Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
