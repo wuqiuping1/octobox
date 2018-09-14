@@ -20,6 +20,7 @@ class Search
     res = res.assigned(assignee) if assignee.present?
     res = res.starred(starred) unless starred.nil?
     res = res.archived(archived) unless archived.nil?
+    res = res.archived(!inbox) unless inbox.nil?
     res = res.unread(unread) unless unread.nil?
     res = res.bot_author unless bot_author.nil?
     res = res.unlabelled unless unlabelled.nil?
@@ -108,6 +109,11 @@ class Search
   def starred
     return nil unless parsed_query[:starred].present?
     parsed_query[:starred].first.try(:downcase) == "true"
+  end
+
+  def inbox
+    return nil unless parsed_query[:inbox].present?
+    parsed_query[:inbox].first.downcase == "true"
   end
 
   def archived

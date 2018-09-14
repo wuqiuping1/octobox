@@ -26,5 +26,6 @@ module SignInHelper
     end
 
     @user.reload
+    @user.notifications.delete_all unless initial_sync
   end
 end
